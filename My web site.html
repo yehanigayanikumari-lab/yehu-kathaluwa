@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yehu Kathaluwa Art Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1208;
+  --gold:#c9a84c;
+  --gold-light:#e8d5a3;
+  --cream:#faf6ef;
+  --warm-gray:#8a7d6b;
+  --white:#ffffff;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem 3rem;
+  background:rgba(250,246,239,0.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(201,168,76,0.2);
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:0.05em;color:var(--ink)}
+.nav-logo span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--gold)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;top:0;right:0;width:55%;height:100%;background:linear-gradient(135deg,#2c1f0e 0%,#1a1208 100%);clip-path:polygon(15% 0,100% 0,100% 100%,0% 100%)}
+.hero-content{position:relative;z-index:2;max-width:520px}
+.hero-eyebrow{font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.1;color:var(--ink);margin-bottom:0.5rem}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-subtitle{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--warm-gray);margin-bottom:2rem;font-style:italic}
+.hero-desc{font-size:0.95rem;line-height:1.8;color:var(--warm-gray);margin-bottom:2.5rem;max-width:400px}
+.btn-primary{display:inline-block;padding:0.9rem 2.5rem;background:var(--gold);color:var(--ink);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.btn-primary:hover{background:var(--ink);color:var(--gold)}
+.btn-outline{display:inline-block;padding:0.9rem 2.5rem;background:transparent;color:var(--ink);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border:1px solid var(--ink);transition:all 0.3s;cursor:pointer;margin-left:1rem;font-family:'Inter',sans-serif}
+.btn-outline:hover{background:var(--ink);color:var(--cream)}
+.hero-image-area{position:absolute;right:0;top:0;width:55%;height:100%;display:flex;align-items:center;justify-content:center;z-index:1}
+.hero-painting{width:300px;height:380px;overflow:hidden;position:relative}
+.hero-painting img{width:100%;height:100%;object-fit:cover}
+.hero-painting::before{content:'';position:absolute;inset:12px;border:1px solid rgba(201,168,76,0.3);z-index:2;pointer-events:none}
+.divider{display:flex;align-items:center;gap:1.5rem;padding:2rem 3rem;border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.2);background:var(--ink)}
+.divider-text{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);white-space:nowrap}
+.divider-line{flex:1;height:1px;background:rgba(201,168,76,0.3)}
+section{padding:5rem 3rem}
+.section-eyebrow{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.2;color:var(--ink);margin-bottom:1.5rem}
+.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:center}
+.about-text p{font-size:0.95rem;line-height:1.9;color:var(--warm-gray);margin-bottom:1rem}
+.about-portrait{aspect-ratio:3/4;overflow:hidden;background:#5c3d2e}
+.about-portrait-placeholder{width:100%;height:100%;background:linear-gradient(180deg,#2c1f0e 0%,#5c3d2e 50%,#8B6551 100%);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.15em;text-transform:uppercase;min-height:300px}
+.styles-section{background:var(--white);padding:4rem 3rem}
+.styles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-top:3rem}
+.style-card{background:var(--cream);border:1px solid rgba(201,168,76,0.2);padding:2rem 1.5rem;transition:all 0.3s}
+.style-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.style-dot{width:12px;height:12px;border-radius:50%;margin-bottom:1.5rem}
+.style-name{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:0.5rem;color:var(--ink)}
+.style-desc{font-size:0.82rem;color:var(--warm-gray);line-height:1.6}
+.gallery-section{background:var(--ink);padding:5rem 3rem}
+.gallery-section .section-title{color:var(--cream)}
+.gallery-section .section-eyebrow{color:var(--gold)}
+.gallery-tabs{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.gallery-tab{padding:0.5rem 1.2rem;border:1px solid rgba(201,168,76,0.3);background:transparent;color:var(--gold-light);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.3s}
+.gallery-tab.active,.gallery-tab:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.gallery-item{position:relative;overflow:hidden;cursor:pointer;background:#2c1f0e;aspect-ratio:4/3}
+.gallery-item.tall{aspect-ratio:3/4}
+.gallery-thumb{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+.gallery-item:hover .gallery-thumb{transform:scale(1.05)}
+.gallery-overlay{position:absolute;inset:0;background:rgba(26,18,8,0.75);display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;opacity:0;transition:opacity 0.3s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay-title{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--cream);margin-bottom:0.2rem}
+.gallery-overlay-type{font-size:0.7rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase}
+.gallery-overlay-price{font-size:0.85rem;color:var(--gold-light);margin-top:0.3rem;font-family:'Playfair Display',serif}
+.saree-section{background:#f5ede0}
+.saree-feature{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:center}
+.saree-display{aspect-ratio:4/5;overflow:hidden;background:#8B0000}
+.saree-placeholder{width:100%;height:100%;background:linear-gradient(160deg,#8B0000 0%,#C0392B 20%,#E74C3C 40%,#F1948A 60%,#FDEBD0 100%);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.15em;text-transform:uppercase}
+.saree-text p{font-size:0.95rem;line-height:1.9;color:var(--warm-gray);margin-bottom:1rem}
+.saree-text h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin-bottom:1rem}
+.commission-section{background:var(--white);text-align:center;padding:6rem 3rem}
+.commission-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin:3rem 0}
+.step{padding:1.5rem 1rem}
+.step-num{font-family:'Playfair Display',serif;font-size:3rem;color:var(--gold-light);line-height:1;margin-bottom:0.5rem}
+.step-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--ink);margin-bottom:0.5rem}
+.step-desc{font-size:0.8rem;color:var(--warm-gray);line-height:1.6}
+.contact-section{background:var(--ink);color:var(--cream);text-align:center;padding:6rem 3rem}
+.contact-section .section-title{color:var(--cream)}
+.contact-section .section-eyebrow{color:var(--gold)}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:3rem 0}
+.contact-item{padding:2rem;border:1px solid rgba(201,168,76,0.2);transition:border-color 0.3s}
+.contact-item:hover{border-color:var(--gold)}
+.contact-icon{color:var(--gold);font-size:1.5rem;margin-bottom:1rem}
+.contact-label{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.contact-value{font-family:'Playfair Display',serif;font-size:1rem;color:var(--cream)}
+footer{background:rgba(0,0,0,0.3);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.footer-text{font-size:0.75rem;color:rgba(255,255,255,0.4)}
+.footer-brand{font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--gold);font-style:italic}
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9997;align-items:center;justify-content:center;flex-direction:column}
+#lightbox.open{display:flex}
+#lightbox img{max-width:80vw;max-height:75vh;object-fit:contain}
+#lightbox-close{position:absolute;top:2rem;right:2rem;background:none;border:none;color:#fff;font-size:2.5rem;cursor:pointer}
+#lightbox-caption{margin-top:1.5rem;text-align:center}
+#lightbox-caption .lb-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream)}
+#lightbox-caption .lb-type{font-size:0.75rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-top:0.3rem}
+#lightbox-caption .lb-price{font-size:0.9rem;color:var(--gold-light);margin-top:0.3rem;font-family:'Playfair Display',serif}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{gap:1rem}
+  .nav-links a{font-size:0.7rem}
+  .hero{padding:7rem 1.5rem 3rem}
+  .hero-bg{display:none}
+  .hero-image-area{display:none}
+  .about-grid,.saree-feature{grid-template-columns:1fr}
+  .commission-steps{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  section{padding:3rem 1.5rem}
+  .gallery-section{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-type" id="lb-type"></div>
+    <div class="lb-price" id="lb-price"></div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-logo">Yehu <span>Kathaluwa</span></div>
+  <div class="nav-links">
+    <a href="#gallery">Gallery</a>
+    <a href="#saree">Saree Art</a>
+    <a href="#commission">Commission</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Fine Art · Sri Lanka</p>
+    <h1 class="hero-title">Where <em>colour</em><br>tells the story</h1>
+    <p class="hero-subtitle">Yehu Kathaluwa Art Gallery</p>
+    <p class="hero-desc">Oil, acrylic, watercolour, digital — සහ hand-painted silk sarees. Every piece is a hand-crafted moment of feeling.</p>
+    <div>
+      <a class="btn-primary" href="#gallery">Explore Gallery</a>
+      <a class="btn-outline" href="#commission">Commission a Piece</a>
+    </div>
+  </div>
+  <div class="hero-image-area">
+    <div class="hero-painting">
+      <img src="https://i.ibb.co/xt1g3CMn/IMG-4172.jpg" alt="Featured artwork" onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-text">Oil · Acrylic · Watercolour · Digital · Saree Painting</span>
+  <div class="divider-line"></div>
+</div>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-portrait">
+      <img src="https://i.ibb.co/B2mQYPDs/IMG-6344.jpg" alt="Yehu Kathaluwa" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+    <div class="about-text">
+      <p class="section-eyebrow">The Artist</p>
+      <h2 class="section-title">A passion painted into every canvas</h2>
+      <p>Yehu Kathaluwa is a Sri Lankan artist whose work spans the full spectrum of painting — from the rich texture of oil and acrylic to the luminous wash of watercolour and the precision of digital art.</p>
+      <p>What makes Yehu's work truly distinctive is the tradition of saree painting — a centuries-old craft brought into a contemporary voice, turning silk into a living canvas worn and celebrated.</p>
+      <p>Based in Sri Lanka, Yehu takes commissions for portraits, landscapes, abstract works, and bespoke painted sarees for weddings and special occasions.</p>
+      <br>
+      <a class="btn-primary" href="#commission">Commission Your Piece →</a>
+    </div>
+  </div>
+</section>
+
+<section class="styles-section">
+  <p class="section-eyebrow">What I Create</p>
+  <h2 class="section-title">Five styles, one soul</h2>
+  <div class="styles-grid">
+    <div class="style-card"><div class="style-dot" style="background:#D2691E"></div><div class="style-name">Oil Painting</div><div class="style-desc">Rich, luminous textures built up in layers. Deep colour and timeless presence.</div></div>
+    <div class="style-card"><div class="style-dot" style="background:#87CEEB"></div><div class="style-name">Watercolour</div><div class="style-desc">Soft, flowing washes of colour. Light and dreamy, full of quiet emotion.</div></div>
+    <div class="style-card"><div class="style-dot" style="background:#9B59B6"></div><div class="style-name">Acrylic</div><div class="style-desc">Bold, vibrant, versatile. Fast-drying colour that pops with energy.</div></div>
+    <div class="style-card"><div class="style-dot" style="background:#2C3E50"></div><div class="style-name">Digital Art</div><div class="style-desc">Precision and possibility combined. Clean lines, infinite colour, modern vision.</div></div>
+    <div class="style-card" style="border-color:rgba(201,168,76,0.5)"><div class="style-dot" style="background:#8B0000"></div><div class="style-name">Saree Painting ✦</div><div class="style-desc">Hand-painted silk sarees — a wearable work of art for weddings and ceremonies.</div></div>
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <p class="section-eyebrow">Selected Works</p>
+  <h2 class="section-title">The Gallery</h2>
+  <div class="gallery-tabs">
+    <button class="gallery-tab active" onclick="filterGallery('all',this)">All Works</button>
+    <button class="gallery-tab" onclick="filterGallery('Oil',this)">Oil</button>
+    <button class="gallery-tab" onclick="filterGallery('Acrylic',this)">Acrylic</button>
+    <button class="gallery-tab" onclick="filterGallery('Saree',this)">Saree</button>
+    <button class="gallery-tab" onclick="filterGallery('Digital',this)">Digital</button>
+    <button class="gallery-tab" onclick="filterGallery('Keytag Pouch',this)">Keytag Pouch</button>
+    <button class="gallery-tab" onclick="filterGallery('Portrait',this)">Portrait</button>
+    <button class="gallery-tab" onclick="filterGallery('Vesak Cards',this)">Vesak Cards</button>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<section class="saree-section" id="saree">
+  <p class="section-eyebrow">A Wearable Canvas</p>
+  <h2 class="section-title">Painted Sarees</h2>
+  <div class="saree-feature">
+    <div class="saree-display">
+      <img src="https://i.ibb.co/tpnVfJZJ/IMG-6240.jpg" alt="Hand-painted saree" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+    <div class="saree-text">
+      <h3>Hand-painted on silk</h3>
+      <p>Yehu's saree paintings are one-of-a-kind pieces created for brides, bridesmaids, and special occasions. Each saree is hand-painted with motifs drawn from nature, tradition, or personal story.</p>
+      <p>Popular designs include floral fields, peacocks, lotus motifs, and custom portraits. Every saree is treated with care so the paint bonds permanently with the silk.</p>
+      <p>Available in cotton, georgette, and pure silk. Custom orders welcome — the design is yours to choose.</p>
+      <br>
+      <a class="btn-primary" href="#commission">Order a Painted Saree</a>
+    </div>
+  </div>
+</section>
+
+<section class="commission-section" id="commission">
+  <p class="section-eyebrow">Commission a Painting</p>
+  <h2 class="section-title">Your vision, my brushstroke</h2>
+  <p style="color:var(--warm-gray);max-width:520px;margin:0 auto;font-size:0.95rem;line-height:1.8">Whether you want a portrait, a landscape from memory, or a painted saree for your wedding day — Yehu works closely with you to bring it to life.</p>
+  <div class="commission-steps">
+    <div class="step"><div class="step-num">01</div><div class="step-name">Share your idea</div><div class="step-desc">Tell Yehu what you have in mind — a photo, a feeling, or just a few words.</div></div>
+    <div class="step"><div class="step-num">02</div><div class="step-name">Get a quote</div><div class="step-desc">Receive a price based on size, medium, and complexity within 24 hours.</div></div>
+    <div class="step"><div class="step-num">03</div><div class="step-name">Watch it grow</div><div class="step-desc">Receive progress photos as your piece takes shape over days or weeks.</div></div>
+    <div class="step"><div class="step-num">04</div><div class="step-name">Receive your art</div><div class="step-desc">Delivered safely to your door, ready to hang or wear.</div></div>
+  </div>
+  <a class="btn-primary" href="#contact">Start a Commission →</a>
+</section>
+
+<section class="contact-section" id="contact">
+  <p class="section-eyebrow">Get in Touch</p>
+  <h2 class="section-title">Let's create something together</h2>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-icon">✉</div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value">yehanigayanikumari@gmail.com</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div class="contact-label">WhatsApp / Phone</div>
+      <div class="contact-value">+94 70 205 3052</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📘</div>
+      <div class="contact-label">Facebook</div>
+      <div class="contact-value">Yehu Kathaluwa Art Gallery</div>
+    </div>
+  </div>
+  <p style="color:rgba(255,255,255,0.4);font-size:0.8rem">Open to commissions island-wide · International shipping available</p>
+  <footer>
+    <span class="footer-text">© 2026 Yehu Kathaluwa Art Gallery · Sri Lanka</span>
+    <span class="footer-brand">Art that speaks</span>
+  </footer>
+</section>
+
+<script>
+const paintings = [
+  {title:'Portrait of Love', type:'Oil', price:'Rs. 5,000', img:'https://i.ibb.co/Ps8WBwKC/image.jpg'},
+  {title:'Tiger Family', type:'Acrylic', price:'', img:'https://i.ibb.co/35BV9XFf/image.jpg'},
+  {title:'Landscape', type:'Acrylic', price:'', img:'https://i.ibb.co/G4VS9fHP/image.jpg'},
+  {title:'ශ්‍රීපාදය', type:'Acrylic', price:'', img:'https://i.ibb.co/99TVP6dZ/image.jpg'},
+  {title:'දලදා මාලිගය', type:'Acrylic', price:'', img:'https://i.ibb.co/k6hg68Nh/image.jpg'},
+  {title:'නෙලුම් විල', type:'Acrylic', price:'', img:'https://i.ibb.co/QFM5gBRc/image.jpg'},
+  {title:'Digital Art 01', type:'Digital', price:'', img:'https://i.ibb.co/QFGP0q5W/IMG-6327.jpg'},
+  {title:'Digital Art 02', type:'Digital', price:'', img:'https://i.ibb.co/n8BYJZRj/IMG-6204.jpg'},
+  {title:'Digital Art 03', type:'Digital', price:'', img:'https://i.ibb.co/0SwX5my/IMG-6150.jpg'},
+  {title:'Digital Art 04', type:'Digital', price:'', img:'https://i.ibb.co/9mYsMC5v/IMG-6036.jpg'},
+  {title:'Digital Art 05', type:'Digital', price:'', img:'https://i.ibb.co/8nt8tnCv/IMG-5995.jpg'},
+  {title:'Digital Art 06', type:'Digital', price:'', img:'https://i.ibb.co/5hfj4Sfk/IMG-5976.jpg'},
+  {title:'Digital Art 07', type:'Digital', price:'', img:'https://i.ibb.co/n44NG28/IMG-5977.jpg'},
+  {title:'Digital Art 08', type:'Digital', price:'', img:'https://i.ibb.co/0RSPFrQg/IMG-5895.jpg'},
+  {title:'Digital Art 09', type:'Digital', price:'', img:'https://i.ibb.co/SD5dgsyM/IMG-5846.jpg'},
+  {title:'Digital Art 10', type:'Digital', price:'', img:'https://i.ibb.co/Kxmj1WLy/IMG-5794.jpg'},
+  {title:'Digital Art 11', type:'Digital', price:'', img:'https://i.ibb.co/spJ0F27M/IMG-5798.jpg'},
+  {title:'Digital Art 12', type:'Digital', price:'', img:'https://i.ibb.co/7ds931Dy/IMG-5727.jpg'},
+  {title:'Digital Art 13', type:'Digital', price:'', img:'https://i.ibb.co/9mn5SDPR/IMG-5687.jpg'},
+  {title:'Digital Art 14', type:'Digital', price:'', img:'https://i.ibb.co/4g367JcM/IMG-5650.jpg'},
+  {title:'Digital Art 15', type:'Digital', price:'', img:'https://i.ibb.co/k2jq89V5/IMG-5589.png'},
+  {title:'Digital Art 16', type:'Digital', price:'', img:'https://i.ibb.co/XkZFCBWV/IMG-5590.jpg'},
+  {title:'Digital Art 17', type:'Digital', price:'', img:'https://i.ibb.co/5xTQmG10/IMG-5532.jpg'},
+  {title:'Digital Art 18', type:'Digital', price:'', img:'https://i.ibb.co/twYT3GR9/IMG-5406.jpg'},
+  {title:'Digital Art 19', type:'Digital', price:'', img:'https://i.ibb.co/RTmD88sh/IMG-5396.png'},
+  {title:'Digital Art 20', type:'Digital', price:'', img:'https://i.ibb.co/LdWqfGf8/IMG-5394.jpg'},
+  {title:'Digital Art 21', type:'Digital', price:'', img:'https://i.ibb.co/MDD9R95G/IMG-5389.jpg'},
+  {title:'Digital Art 22', type:'Digital', price:'', img:'https://i.ibb.co/prs876TT/IMG-5383.jpg'},
+  {title:'Digital Art 23', type:'Digital', price:'', img:'https://i.ibb.co/4nWLtpdZ/IMG-5115.jpg'},
+  {title:'Painted Saree 01', type:'Saree', price:'', img:'https://i.ibb.co/DfTFcxCX/IMG-5156.png'},
+  {title:'Painted Saree 02', type:'Saree', price:'', img:'https://i.ibb.co/VY5hGZrb/IMG-5143.png'},
+  {title:'Painted Saree 03', type:'Saree', price:'', img:'https://i.ibb.co/4R8bmNhN/IMG-5088.jpg'},
+  {title:'Painted Saree 04', type:'Saree', price:'', img:'https://i.ibb.co/3m61wk3P/IMG-5103.jpg'},
+  {title:'Painted Saree 05', type:'Saree', price:'', img:'https://i.ibb.co/pBtRPjbx/IMG-5114.jpg'},
+  {title:'Painted Saree 06', type:'Saree', price:'', img:'https://i.ibb.co/4w07046f/IMG-5126.jpg'},
+  {title:'Painted Saree 07', type:'Saree', price:'', img:'https://i.ibb.co/tpnVfJZJ/IMG-6240.jpg'},
+  {title:'Keytag Pouch 01', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/FqKgYbxL/IMG-6310.jpg'},
+  {title:'Keytag Pouch 02', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/nMyvnn1j/IMG-6309.jpg'},
+  {title:'Keytag Pouch 03', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/vvhhcnYD/IMG-6311.jpg'},
+  {title:'Keytag Pouch 04', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/zWDw6q0R/IMG-6312.jpg'},
+  {title:'Keytag Pouch 05', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/zTNBWxTj/IMG-6313.jpg'},
+  {title:'Keytag Pouch 06', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/pvh6s4tb/IMG-6315.jpg'},
+  {title:'Keytag Pouch 07', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/YFLTCj7Z/IMG-6316.jpg'},
+  {title:'Keytag Pouch 08', type:'Keytag Pouch', price:'', img:'https://i.ibb.co/21GZSDRR/IMG-6317.jpg'},
+  {title:'Portrait Art 01', type:'Portrait', price:'', img:'https://i.ibb.co/8n5LB0Rj/1dfc020b-edf7-4b81-9711-c4470512c304.jpg'},
+  {title:'Portrait Art 02', type:'Portrait', price:'', img:'https://i.ibb.co/DDwfytMD/1fb3cdf8-b86b-47a1-8f21-8cf7c8947296.jpg'},
+  {title:'Portrait Art 03', type:'Portrait', price:'', img:'https://i.ibb.co/WNL2vFVP/2c5c298f-4107-49ca-8949-af81cec4d9f6.jpg'},
+  {title:'Portrait Art 04', type:'Portrait', price:'', img:'https://i.ibb.co/TD8gr00Z/260bb1b5-7e43-4017-86d7-71e5f019b1d0.jpg'},
+  {title:'Portrait Art 05', type:'Portrait', price:'', img:'https://i.ibb.co/nNJ7xzSk/b2afa2a7-a34a-4c31-a873-7d2f14f410c1.jpg'},
+  {title:'Portrait Art 06', type:'Portrait', price:'', img:'https://i.ibb.co/0j8yVyzx/IMG-6338.jpg'},
+  {title:'Portrait Art 07', type:'Portrait', price:'', img:'https://i.ibb.co/Nn6YWpL9/IMG-6337.jpg'},
+  {title:'Portrait Art 08', type:'Portrait', price:'', img:'https://i.ibb.co/ksjNMJZ1/IMG-6336.jpg'},
+  {title:'Portrait Art 09', type:'Portrait', price:'', img:'https://i.ibb.co/G3s1SNWh/IMG-6335.jpg'},
+  {title:'Vesak Card 01', type:'Vesak Cards', price:'', img:'https://i.ibb.co/yFjMY49p/IMG-6103.jpg'},
+  {title:'Vesak Card 02', type:'Vesak Cards', price:'', img:'https://i.ibb.co/fGC3jmdM/IMG-6087.jpg'},
+  {title:'Vesak Card 03', type:'Vesak Cards', price:'', img:'https://i.ibb.co/8nt8tnCv/IMG-5995.jpg'},
+  {title:'Vesak Card 04', type:'Vesak Cards', price:'', img:'https://i.ibb.co/Zz8C4Ykh/IMG-5784.jpg'},
+  {title:'Vesak Card 05', type:'Vesak Cards', price:'', img:'https://i.ibb.co/LDfR3bxJ/IMG-5783.jpg'},
+  {title:'Vesak Card 06', type:'Vesak Cards', price:'', img:'https://i.ibb.co/qLmrd4WL/IMG-5782.jpg'},
+  {title:'Vesak Card 07', type:'Vesak Cards', price:'', img:'https://i.ibb.co/5hWdxC4K/IMG-5781.jpg'},
+  {title:'Vesak Card 08', type:'Vesak Cards', price:'', img:'https://i.ibb.co/zHbsmpq1/IMG-5780.jpg'},
+  {title:'Vesak Card 09', type:'Vesak Cards', price:'', img:'https://i.ibb.co/6cFCXBRB/IMG-5779.jpg'},
+  {title:'Vesak Card 10', type:'Vesak Cards', price:'', img:'https://i.ibb.co/xqqVmcnr/IMG-5778.jpg'},
+  {title:'Vesak Card 11', type:'Vesak Cards', price:'', img:'https://i.ibb.co/JwkyKgJz/IMG-5621.jpg'},
+  {title:'Vesak Card 12', type:'Vesak Cards', price:'', img:'https://i.ibb.co/7NVRtL6t/IMG-5626.jpg'},
+  {title:'Vesak Card 13', type:'Vesak Cards', price:'', img:'https://i.ibb.co/8grrB0P8/IMG-5625.jpg'},
+  {title:'Vesak Card 14', type:'Vesak Cards', price:'', img:'https://i.ibb.co/KjJC3X9F/IMG-5624.jpg'},
+  {title:'Vesak Card 15', type:'Vesak Cards', price:'', img:'https://i.ibb.co/gbqg2BzD/IMG-5623.jpg'},
+  {title:'Vesak Card 16', type:'Vesak Cards', price:'', img:'https://i.ibb.co/rRb7wRk0/IMG-5622.jpg'},
+];
+
+function renderGallery(filter){
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '';
+  const filtered = filter === 'all' ? paintings : paintings.filter(p => p.type === filter);
+  filtered.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item' + (i === 0 ? ' tall' : '');
+    div.onclick = () => openLightbox(p);
+    div.innerHTML = `
+      <img class="gallery-thumb" src="${p.img}" alt="${p.title}" onerror="this.parentElement.style.background='#2c1f0e'">
+      <div class="gallery-overlay">
+        <div class="gallery-overlay-title">${p.title}</div>
+        <div class="gallery-overlay-type">${p.type}</div>
+        ${p.price ? `<div class="gallery-overlay-price">${p.price}</div>` : ''}
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+function filterGallery(type, btn){
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderGallery(type);
+}
+
+function openLightbox(p){
+  document.getElementById('lightbox-img').src = p.img;
+  document.getElementById('lb-title').textContent = p.title;
+  document.getElementById('lb-type').textContent = p.type;
+  document.getElementById('lb-price').textContent = p.price || '';
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.getElementById('lightbox').addEventListener('click', function(e){
+  if(e.target === this) closeLightbox();
+});
+
+renderGallery('all');
+</script>
+</body>
+</html>
